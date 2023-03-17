@@ -6,57 +6,57 @@ class Permission extends Equatable {
   final String id;
   final String object;
   final int created;
-  final bool allow_create_engine;
-  final bool allow_sampling;
-  final bool allow_logprobs;
-  final bool allow_search_indices;
-  final bool allow_view;
-  final bool allow_fine_tuning;
+  final bool allowCreateEngine;
+  final bool allowSampling;
+  final bool allowLogprobs;
+  final bool allowSearchIndices;
+  final bool allowView;
+  final bool allowFineTuning;
   final String organization;
   final String group;
-  final bool is_blocking;
-  Permission({
+  final bool isBlocking;
+  const Permission({
     required this.id,
     required this.object,
     required this.created,
-    required this.allow_create_engine,
-    required this.allow_sampling,
-    required this.allow_logprobs,
-    required this.allow_search_indices,
-    required this.allow_view,
-    required this.allow_fine_tuning,
+    required this.allowCreateEngine,
+    required this.allowSampling,
+    required this.allowLogprobs,
+    required this.allowSearchIndices,
+    required this.allowView,
+    required this.allowFineTuning,
     required this.organization,
     required this.group,
-    required this.is_blocking,
+    required this.isBlocking,
   });
 
   Permission copyWith({
     String? id,
     String? object,
     int? created,
-    bool? allow_create_engine,
-    bool? allow_sampling,
-    bool? allow_logprobs,
-    bool? allow_search_indices,
-    bool? allow_view,
-    bool? allow_fine_tuning,
+    bool? allowCreateEngine,
+    bool? allowSampling,
+    bool? allowLogprobs,
+    bool? allowSearchIndices,
+    bool? allowView,
+    bool? allowFineTuning,
     String? organization,
     String? group,
-    bool? is_blocking,
+    bool? isBlocking,
   }) {
     return Permission(
       id: id ?? this.id,
       object: object ?? this.object,
       created: created ?? this.created,
-      allow_create_engine: allow_create_engine ?? this.allow_create_engine,
-      allow_sampling: allow_sampling ?? this.allow_sampling,
-      allow_logprobs: allow_logprobs ?? this.allow_logprobs,
-      allow_search_indices: allow_search_indices ?? this.allow_search_indices,
-      allow_view: allow_view ?? this.allow_view,
-      allow_fine_tuning: allow_fine_tuning ?? this.allow_fine_tuning,
+      allowCreateEngine: allowCreateEngine ?? this.allowCreateEngine,
+      allowSampling: allowSampling ?? this.allowSampling,
+      allowLogprobs: allowLogprobs ?? this.allowLogprobs,
+      allowSearchIndices: allowSearchIndices ?? this.allowSearchIndices,
+      allowView: allowView ?? this.allowView,
+      allowFineTuning: allowFineTuning ?? this.allowFineTuning,
       organization: organization ?? this.organization,
       group: group ?? this.group,
-      is_blocking: is_blocking ?? this.is_blocking,
+      isBlocking: isBlocking ?? this.isBlocking,
     );
   }
 
@@ -65,15 +65,15 @@ class Permission extends Equatable {
       'id': id,
       'object': object,
       'created': created,
-      'allow_create_engine': allow_create_engine,
-      'allow_sampling': allow_sampling,
-      'allow_logprobs': allow_logprobs,
-      'allow_search_indices': allow_search_indices,
-      'allow_view': allow_view,
-      'allow_fine_tuning': allow_fine_tuning,
+      'allow_create_engine': allowCreateEngine,
+      'allow_sampling': allowSampling,
+      'allow_logprobs': allowLogprobs,
+      'allow_search_indices': allowSearchIndices,
+      'allow_view': allowView,
+      'allow_fine_tuning': allowFineTuning,
       'organization': organization,
       'group': group,
-      'is_blocking': is_blocking,
+      'is_blocking': isBlocking,
     };
   }
 
@@ -82,25 +82,26 @@ class Permission extends Equatable {
       id: map['id'] ?? '',
       object: map['object'] ?? '',
       created: map['created']?.toInt() ?? 0,
-      allow_create_engine: map['allow_create_engine'] ?? false,
-      allow_sampling: map['allow_sampling'] ?? false,
-      allow_logprobs: map['allow_logprobs'] ?? false,
-      allow_search_indices: map['allow_search_indices'] ?? false,
-      allow_view: map['allow_view'] ?? false,
-      allow_fine_tuning: map['allow_fine_tuning'] ?? false,
+      allowCreateEngine: map['allow_create_engine'] ?? false,
+      allowSampling: map['allow_sampling'] ?? false,
+      allowLogprobs: map['allow_logprobs'] ?? false,
+      allowSearchIndices: map['allow_search_indices'] ?? false,
+      allowView: map['allow_view'] ?? false,
+      allowFineTuning: map['allow_fine_tuning'] ?? false,
       organization: map['organization'] ?? '',
       group: map['group'] ?? '',
-      is_blocking: map['is_blocking'] ?? false,
+      isBlocking: map['is_blocking'] ?? false,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Permission.fromJson(String source) => Permission.fromMap(json.decode(source));
+  factory Permission.fromJson(String source) =>
+      Permission.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'Permission(id: $id, object: $object, created: $created, allow_create_engine: $allow_create_engine, allow_sampling: $allow_sampling, allow_logprobs: $allow_logprobs, allow_search_indices: $allow_search_indices, allow_view: $allow_view, allow_fine_tuning: $allow_fine_tuning, organization: $organization, group: $group, is_blocking: $is_blocking)';
+    return 'Permission(id: $id, object: $object, created: $created, allow_create_engine: $allowCreateEngine, allow_sampling: $allowSampling, allow_logprobs: $allowLogprobs, allow_search_indices: $allowSearchIndices, allow_view: $allowView, allow_fine_tuning: $allowFineTuning, organization: $organization, group: $group, is_blocking: $isBlocking)';
   }
 
   @override
@@ -109,15 +110,15 @@ class Permission extends Equatable {
       id,
       object,
       created,
-      allow_create_engine,
-      allow_sampling,
-      allow_logprobs,
-      allow_search_indices,
-      allow_view,
-      allow_fine_tuning,
+      allowCreateEngine,
+      allowSampling,
+      allowLogprobs,
+      allowSearchIndices,
+      allowView,
+      allowFineTuning,
       organization,
       group,
-      is_blocking,
+      isBlocking,
     ];
   }
 }

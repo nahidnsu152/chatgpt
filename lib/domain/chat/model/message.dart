@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 class Message extends Equatable {
   final String role;
   final String content;
-  Message({
+  const Message({
     required this.role,
     required this.content,
   });
@@ -36,7 +36,8 @@ class Message extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory Message.fromJson(String source) => Message.fromMap(json.decode(source));
+  factory Message.fromJson(String source) =>
+      Message.fromMap(json.decode(source));
 
   @override
   String toString() => 'Message(role: $role, content: $content)';

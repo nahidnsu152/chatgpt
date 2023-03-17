@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'model_data.dart';
+import 'models/model_data.dart';
 
 class ModelResponse extends Equatable {
   final String object;

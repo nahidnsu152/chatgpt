@@ -4,8 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../utils/utils.dart';
 import '../../widgets/k_app_bar.dart';
 import '../../widgets/widgets.dart';
-import '../drawer/side_menu.dart';
-
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -15,10 +13,6 @@ class HomeScreen extends HookConsumerWidget {
       backgroundColor: Colors.white,
       appBar: const KAppBar(
         titleText: 'Home',
-      ),
-      drawer: const Drawer(
-        width: 288,
-        child: SideMenu(),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

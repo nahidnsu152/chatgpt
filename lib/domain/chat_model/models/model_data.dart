@@ -8,7 +8,7 @@ class ModelData extends Equatable {
   final String id;
   final String object;
   final int created;
-  final String owned_by;
+  final String ownedBy;
   final List<Permission> permission;
   final String root;
   final String parent;
@@ -16,7 +16,7 @@ class ModelData extends Equatable {
     required this.id,
     required this.object,
     required this.created,
-    required this.owned_by,
+    required this.ownedBy,
     required this.permission,
     required this.root,
     required this.parent,
@@ -26,7 +26,7 @@ class ModelData extends Equatable {
     String? id,
     String? object,
     int? created,
-    String? owned_by,
+    String? ownedBy,
     List<Permission>? permission,
     String? root,
     String? parent,
@@ -35,7 +35,7 @@ class ModelData extends Equatable {
       id: id ?? this.id,
       object: object ?? this.object,
       created: created ?? this.created,
-      owned_by: owned_by ?? this.owned_by,
+      ownedBy: ownedBy ?? this.ownedBy,
       permission: permission ?? this.permission,
       root: root ?? this.root,
       parent: parent ?? this.parent,
@@ -47,7 +47,7 @@ class ModelData extends Equatable {
       'id': id,
       'object': object,
       'created': created,
-      'owned_by': owned_by,
+      'owned_by': ownedBy,
       'permission': permission.map((x) => x.toMap()).toList(),
       'root': root,
       'parent': parent,
@@ -59,7 +59,7 @@ class ModelData extends Equatable {
       id: map['id'] ?? '',
       object: map['object'] ?? '',
       created: map['created']?.toInt() ?? 0,
-      owned_by: map['owned_by'] ?? '',
+      ownedBy: map['owned_by'] ?? '',
       permission: List<Permission>.from(
           map['permission']?.map((x) => Permission.fromMap(x))),
       root: map['root'] ?? '',
@@ -74,7 +74,7 @@ class ModelData extends Equatable {
 
   @override
   String toString() {
-    return 'Data(id: $id, object: $object, created: $created, owned_by: $owned_by, permission: $permission, root: $root, parent: $parent)';
+    return 'Data(id: $id, object: $object, created: $created, owned_by: $ownedBy, permission: $permission, root: $root, parent: $parent)';
   }
 
   @override
@@ -83,7 +83,7 @@ class ModelData extends Equatable {
       id,
       object,
       created,
-      owned_by,
+      ownedBy,
       permission,
       root,
       parent,
