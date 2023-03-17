@@ -1,7 +1,5 @@
-
 class APIRoute {
-  static const String dummyPerosn = 'https://i.pravatar.cc/300';
-  static const String webURL = "";
-  static const String baseURL = "http://saimon.demoff.xyz/";
-  static const String apiV1 = "api/";
+  static const String baseURL = "https://api.openai.com/v1/";
+  static const String models = "models";
+  static const String chatCompletions = "completions";
 }

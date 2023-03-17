@@ -12,6 +12,11 @@ class ModelResponse extends Equatable {
     required this.data,
   });
 
+  factory ModelResponse.init() => const ModelResponse(
+        object: '',
+        data: [],
+      );
+
   ModelResponse copyWith({
     String? object,
     List<ModelData>? data,

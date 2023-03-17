@@ -12,6 +12,12 @@ class Usage extends Equatable {
     required this.totalTokens,
   });
 
+  factory Usage.init() => const Usage(
+        promptTokens: 0,
+        completionTokens: 0,
+        totalTokens: 0,
+      );
+
   Usage copyWith({
     int? promptTokens,
     int? completionTokens,

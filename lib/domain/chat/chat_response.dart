@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'model/choice.dart';
 import 'model/usage.dart';
 
-
 class ChatResponse extends Equatable {
   final String id;
   final String object;
@@ -21,6 +20,15 @@ class ChatResponse extends Equatable {
     required this.usage,
     required this.choices,
   });
+
+  factory ChatResponse.init() => ChatResponse(
+        id: '',
+        object: '',
+        created: 0,
+        model: '',
+        usage: Usage.init(),
+        choices: const [],
+      );
 
   ChatResponse copyWith({
     String? id,

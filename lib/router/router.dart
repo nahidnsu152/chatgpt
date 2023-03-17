@@ -1,8 +1,8 @@
+import 'package:chatgpt/presentation/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../presentation/main_nav/main_nav.dart';
 import '../presentation/splash/splash_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -74,8 +74,8 @@ class RouterNotifier extends ChangeNotifier {
         ),
 
         GoRoute(
-          path: MainNav.route,
-          builder: (context, state) => const MainNav(),
+          path: HomeScreen.route,
+          builder: (context, state) => const HomeScreen(),
         ),
         // GoRoute(
         //   path: ApplicationInfoScreen.route,

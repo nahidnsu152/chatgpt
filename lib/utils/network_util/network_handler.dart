@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:chatgpt/utils/strings.dart';
 import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart';
@@ -39,6 +40,7 @@ class NetworkHandler {
         'Content-Type': 'application/json',
         'Content': 'application/json',
         'Accept': 'application/json',
+        'Authorization': 'Bearer ${KStrings.apiKey}',
         if (_token != null && _token!.isNotEmpty) "Authorization": "$_token"
       };
     } else {
@@ -46,6 +48,7 @@ class NetworkHandler {
         'Content-Type': 'application/json',
         'Content': 'application/json',
         'Accept': 'application/json',
+        'Authorization': 'Bearer ${KStrings.apiKey}',
       };
     }
   }

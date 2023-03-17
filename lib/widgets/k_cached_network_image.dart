@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:iconly/iconly.dart';
 
 import '../server/api_routes.dart';
 import '../utils/utils.dart';
@@ -126,7 +125,7 @@ class KCachedNetworkImage extends HookConsumerWidget {
               alignment: Alignment.center,
               color: context.color.shadow.withOpacity(.1),
               child: Icon(
-                IconlyBroken.image,
+                Icons.image,
                 size: 30.sp,
               ),
             ),
@@ -199,7 +198,7 @@ class KCachedNetworkImageLoading extends StatelessWidget {
         alignment: Alignment.center,
         color: context.color.shadow.withOpacity(.1),
         child: Icon(
-          IconlyBroken.image,
+          Icons.image,
           size: 30.sp,
         ),
       ),

@@ -1,7 +1,8 @@
 class KStrings {
   KStrings._();
 
-  String apiKey = "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";
+  static const String apiKey =
+      "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";
 
   static const String appName = '';
   static const String token = 'token';

@@ -78,7 +78,7 @@ class MyTheme {
     ),
     useMaterial3ErrorColors: true,
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
-    fontFamily: GoogleFonts.roboto().fontFamily,
+    fontFamily: GoogleFonts.josefinSans().fontFamily,
     //fontFamily: "baiJamjuree",
   );
 
