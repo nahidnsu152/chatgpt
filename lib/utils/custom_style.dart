@@ -23,4 +23,12 @@ class CustomStyle {
     fontSize: Dimensions.mediumTextSize,
     fontWeight: FontWeight.bold,
   );
+  final senderTextStyle = TextStyle(
+    fontSize: Dimensions.mediumTextSize,
+    color: Colors.white,
+  );
+  final gptTextStyle = TextStyle(
+    fontSize: Dimensions.mediumTextSize,
+    color: Colors.black,
+  );
 }

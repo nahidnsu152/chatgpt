@@ -27,7 +27,8 @@ class HomeRepo {
     }, (r) => right(r));
   }
 
-  Future<Either<CleanFailure, ChatResponse>> login(ChatBody body) async {
+  Future<Either<CleanFailure, ChatResponse>> chatResponse(ChatBody body) async {
+    Logger.i("Repo: $body");
     final data = await api.post(
       fromData: (json) => ChatResponse.fromMap(json),
       endPoint: APIRoute.chatCompletions,
@@ -40,7 +41,7 @@ class HomeRepo {
       final failure = l.copyWith(error: error['error']["message"]);
       return left(failure);
     }, (r) {
-      Logger.v("data: $data");
+      // Logger.v("data: $data");
       return right(r);
     });
   }

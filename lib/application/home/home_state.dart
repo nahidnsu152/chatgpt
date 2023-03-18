@@ -12,7 +12,7 @@ class HomeState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final ModelResponse modelResponse;
-  final List<ChatResponse> chatResponse;
+  final ChatResponse chatResponse;
   final List<Message> messages;
 
   const HomeState({
@@ -27,7 +27,7 @@ class HomeState extends Equatable {
         loading: false,
         failure: CleanFailure.none(),
         modelResponse: ModelResponse.init(),
-        chatResponse: const [],
+        chatResponse: ChatResponse.init(),
         messages: const [],
       );
 
@@ -35,7 +35,7 @@ class HomeState extends Equatable {
     bool? loading,
     CleanFailure? failure,
     ModelResponse? modelResponse,
-    List<ChatResponse>? chatResponse,
+    ChatResponse? chatResponse,
     List<Message>? messages,
   }) {
     return HomeState(
@@ -68,7 +68,7 @@ class HomeState extends Equatable {
       'loading': loading,
       'failure': failure,
       'modelResponse': modelResponse.toMap(),
-      'chatResponse': chatResponse.map((x) => x.toMap()).toList(),
+      'chatResponse': chatResponse.toMap(),
       'messages': messages.map((x) => x.toMap()).toList(),
     };
   }
@@ -78,8 +78,7 @@ class HomeState extends Equatable {
       loading: map['loading'] ?? false,
       failure: map['failure'],
       modelResponse: ModelResponse.fromMap(map['modelResponse']),
-      chatResponse: List<ChatResponse>.from(
-          map['chatResponse']?.map((x) => ChatResponse.fromMap(x))),
+      chatResponse: ChatResponse.fromMap(map['chatResponse']),
       messages:
           List<Message>.from(map['messages']?.map((x) => Message.fromMap(x))),
     );

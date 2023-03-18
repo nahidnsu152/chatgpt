@@ -1,7 +1,8 @@
+import 'package:chatgpt/domain/chat/chat_body.dart';
 import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
+import '../../domain/chat/model/message.dart';
 import '../../infastructure/home_repo.dart';
 import '../global.dart';
 import 'home_state.dart';
@@ -33,4 +34,30 @@ class HomeNotifier extends StateNotifier<HomeState> {
     );
   }
 
+  void getChatResponse(ChatBody body) async {
+    state = state.copyWith(loading: true);
+    final result = await repo.chatResponse(body);
+
+    //Logger.d("result: $result");
+    result.fold(
+      (l) {
+        _ref.watch(snackBarProvider(l.error));
+        return state = state.copyWith(failure: l, loading: false);
+      },
+      (r) {
+        return state =
+            state.copyWith(loading: false, chatResponse: r, messages: [
+          ...state.messages,
+          r.choices[0].message,
+        ]);
+      },
+    );
+  }
+
+  addToList(String role, String content) {
+    state = state.copyWith(messages: [
+      ...state.messages,
+      Message(role: role, content: content),
+    ]);
+  }
 }

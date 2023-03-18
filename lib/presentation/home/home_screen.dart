@@ -1,4 +1,7 @@
+import 'package:chatgpt/domain/chat/chat_body.dart';
+import 'package:chatgpt/domain/chat/model/message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -99,8 +102,135 @@ class HomeScreen extends HookConsumerWidget {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [],
+        mainAxisAlignment: mainEnd,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              reverse: true,
+              itemCount: state.messages.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  mainAxisAlignment: mainEnd,
+                  children: [
+                    Padding(
+                      padding: padding20,
+                      child: Row(
+                        mainAxisAlignment: state.messages[index].role == 'user'
+                            ? mainEnd
+                            : mainStart,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.w,
+                              vertical: 10.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: state.messages[index].role == 'user'
+                                  ? context.color.primary.withOpacity(0.8)
+                                  : context.color.onPrimary,
+                              borderRadius: radius10,
+                            ),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 0.7.sw),
+                              child: Text(
+                                state.messages[index].content,
+                                style: state.messages[index].role == 'user'
+                                    ? CustomStyle
+                                        .customStyleInstance.senderTextStyle
+                                    : CustomStyle
+                                        .customStyleInstance.gptTextStyle,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          // Padding(
+          //   padding: paddingH20,
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //         child: TextField(
+          //           controller: sendMessageController,
+          //           decoration: const InputDecoration(
+          //             hintText: 'Enter a message',
+          //           ),
+          //         ),
+          //       ),
+          //       IconButton(
+          //         onPressed: () {
+          //           ref.read(homeProvider.notifier).addToList(
+          //                 'assistant',
+          //                 sendMessageController.text,
+          //               );
+          //           sendMessageController.clear();
+          //         },
+          //         icon: const Icon(Icons.send),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          Material(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: sendMessageController,
+                      onSubmitted: (value) async {},
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: KStrings.howCanIHelp,
+                        fillColor: Colors.transparent,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      ref.read(homeProvider.notifier).getChatResponse(
+                            ChatBody(
+                              model: selectedModel.value,
+                              messages: [
+                                Message(
+                                  role: KStrings.user,
+                                  content: sendMessageController.text,
+                                ),
+                              ],
+                              temperature: 0.7,
+                            ),
+                          );
+                      Logger.i(
+                        ChatBody(
+                          model: selectedModel.value,
+                          messages: [
+                            Message(
+                              role: KStrings.user,
+                              content: sendMessageController.text,
+                            )
+                          ],
+                          temperature: 0.7,
+                        ).toMap(),
+                      );
+                      sendMessageController.clear();
+                    },
+                    icon: const Icon(Icons.send),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
