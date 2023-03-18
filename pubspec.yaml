@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_chat_bubble: ^2.0.2
+  flutter_chat_ui: ^1.6.6
   flutter_easylogger: ^2.3.3
   flutter_hooks: ^0.18.5+1
   flutter_screenutil: ^5.5.4
