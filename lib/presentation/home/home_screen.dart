@@ -1,7 +1,6 @@
 import 'package:chatgpt/domain/chat/chat_body.dart';
 import 'package:chatgpt/domain/chat/model/message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easylogger/flutter_logger.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,7 +17,6 @@ class HomeScreen extends HookConsumerWidget {
     final state = ref.watch(homeProvider);
     final selectedModel = useState('gpt-3.5-turbo-0301');
     final sendMessageController = useTextEditingController();
-    // List<String> messages = ["My Name is", "I am from", "I am a"];
 
     return Scaffold(
       appBar: AppBar(
@@ -106,7 +104,7 @@ class HomeScreen extends HookConsumerWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              reverse: true,
+              //reverse: true,
               itemCount: state.messages.length,
               itemBuilder: (context, index) {
                 return Column(
@@ -132,8 +130,8 @@ class HomeScreen extends HookConsumerWidget {
                             ),
                             child: ConstrainedBox(
                               constraints: BoxConstraints(maxWidth: 0.7.sw),
-                              child: Text(
-                                state.messages[index].content,
+                              child: SelectableText(
+                                state.messages[index].content.trim(),
                                 style: state.messages[index].role == 'user'
                                     ? CustomStyle
                                         .customStyleInstance.senderTextStyle
@@ -198,6 +196,10 @@ class HomeScreen extends HookConsumerWidget {
                   ),
                   IconButton(
                     onPressed: () {
+                      ref.read(homeProvider.notifier).addToList(
+                            'user',
+                            sendMessageController.text,
+                          );
                       ref.read(homeProvider.notifier).getChatResponse(
                             ChatBody(
                               model: selectedModel.value,
@@ -210,18 +212,7 @@ class HomeScreen extends HookConsumerWidget {
                               temperature: 0.7,
                             ),
                           );
-                      Logger.i(
-                        ChatBody(
-                          model: selectedModel.value,
-                          messages: [
-                            Message(
-                              role: KStrings.user,
-                              content: sendMessageController.text,
-                            )
-                          ],
-                          temperature: 0.7,
-                        ).toMap(),
-                      );
+
                       sendMessageController.clear();
                     },
                     icon: const Icon(Icons.send),
