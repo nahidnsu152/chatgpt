@@ -13,4 +13,5 @@ class KStrings {
   //? Homne Screen
   static const String selectModel = 'Select Model';
   static const String howCanIHelp = 'How can I help you';
+  static const String warning = 'Plaese input your message';
 }

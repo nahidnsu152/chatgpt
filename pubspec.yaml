@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.19.4 <3.0.0'
 
 dependencies:
+  animated_text_kit: ^4.2.2
   bot_toast: ^4.0.3
   cached_network_image: ^3.2.2
   cupertino_icons: ^1.0.2
@@ -41,6 +42,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/json/
   #   - images/a_dot_ham.jpeg
   # fonts:
   #   - family: Schyler

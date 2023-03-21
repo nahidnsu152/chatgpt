@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../utils/utils.dart';
 import '../theme/theme.dart';
 
-
 final scaffoldKeyProvider = Provider<GlobalKey<ScaffoldMessengerState>>((ref) {
   final GlobalKey<ScaffoldMessengerState> snackbarKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -64,6 +63,7 @@ showToast(String text) => BotToast.showText(
       text: text,
       duration: const Duration(seconds: 2),
       contentPadding: const EdgeInsets.all(10),
+      contentColor: const Color(0xff00296b),
     );
 
 showFloatBottomSheet(

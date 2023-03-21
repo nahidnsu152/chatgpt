@@ -1,12 +1,12 @@
-import 'package:chatgpt/application/global.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chatgpt/domain/chat/chat_body.dart';
 import 'package:chatgpt/domain/chat/model/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
 
+import '../../application/global.dart';
 import '../../application/home/home_provider.dart';
 import '../../domain/chat_model/models/model_data.dart';
 import '../../utils/utils.dart';
@@ -23,6 +23,12 @@ class HomeScreen extends HookConsumerWidget {
 
     ref.listen(homeProvider, (previous, next) {
       if (previous!.loading == false && next.loading) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+
         showLoading();
       } else {
         closeLoading();
@@ -115,7 +121,6 @@ class HomeScreen extends HookConsumerWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              //reverse: true,
               controller: scrollController,
               itemCount: state.messages.length,
               itemBuilder: (context, index) {
@@ -143,27 +148,30 @@ class HomeScreen extends HookConsumerWidget {
                             ),
                             child: ConstrainedBox(
                               constraints: BoxConstraints(maxWidth: 0.7.sw),
-                              child: SelectableText(
-                                state.messages[index].content.trim(),
-                                style: state.messages[index].role == 'user'
-                                    ? CustomStyle
-                                        .customStyleInstance.senderTextStyle
-                                    : CustomStyle
-                                        .customStyleInstance.gptTextStyle,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 40.w,
-                            height: 40.h,
-                            padding: padding6,
-                            decoration: BoxDecoration(
-                              color: context.color.primary,
-                              shape: BoxShape.rectangle,
-                            ),
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              color: context.color.onPrimary,
+                              // child: SelectableText(
+                              //   state.messages[index].content.trim(),
+                              //   style: state.messages[index].role == 'user'
+                              //       ? CustomStyle
+                              //           .customStyleInstance.senderTextStyle
+                              //       : CustomStyle
+                              //           .customStyleInstance.gptTextStyle,
+                              // ),
+                              child: AnimatedTextKit(
+                                  isRepeatingAnimation: false,
+                                  repeatForever: false,
+                                  displayFullTextOnTap: true,
+                                  totalRepeatCount: 0,
+                                  animatedTexts: [
+                                    TyperAnimatedText(
+                                      state.messages[index].content.trim(),
+                                      textStyle:
+                                          state.messages[index].role == 'user'
+                                              ? CustomStyle.customStyleInstance
+                                                  .senderTextStyle
+                                              : CustomStyle.customStyleInstance
+                                                  .gptTextStyle,
+                                    ),
+                                  ]),
                             ),
                           ),
                           gap10,
@@ -175,43 +183,6 @@ class HomeScreen extends HookConsumerWidget {
               },
             ),
           ),
-          // Padding(
-          //   padding: paddingH20,
-          //   child: Row(
-          //     children: [
-          //       Expanded(
-          //         child: TextField(
-          //           controller: sendMessageController,
-          //           decoration: const InputDecoration(
-          //             hintText: 'Enter a message',
-          //           ),
-          //         ),
-          //       ),
-          //       IconButton(
-          //         onPressed: () {
-          //           ref.read(homeProvider.notifier).addToList(
-          //                 'assistant',
-          //                 sendMessageController.text,
-          //               );
-          //           sendMessageController.clear();
-          //         },
-          //         icon: const Icon(Icons.send),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          
-
-          //? Lottie
-          
-          
-          // Lottie.asset(
-          //   'assets/lottie/typing.json',
-          //   height: 100.h,
-          //   width: 100.w,
-          //   fit: BoxFit.fill,
-          // ),
-
           Material(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -234,36 +205,49 @@ class HomeScreen extends HookConsumerWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      ref.read(homeProvider.notifier).addToList(
-                            'user',
-                            sendMessageController.text,
-                          );
+                      if (sendMessageController.text.isNotEmpty) {
+                        ref.read(homeProvider.notifier).addToList(
+                              'user',
+                              sendMessageController.text,
+                            );
 
-                      ref
-                          .read(homeProvider.notifier)
-                          .getChatResponse(
-                            ChatBody(
-                              model: selectedModel.value,
-                              messages: [
-                                Message(
-                                  role: KStrings.user,
-                                  content: sendMessageController.text,
-                                ),
-                              ],
-                              temperature: 0.7,
-                            ),
-                          )
-                          .then(
-                            (value) => value
-                                ? scrollController.animateTo(
-                                    scrollController.position.maxScrollExtent,
-                                    duration: const Duration(milliseconds: 600),
-                                    curve: Curves.easeIn,
-                                  )
-                                : null,
-                          );
+                        ref
+                            .read(homeProvider.notifier)
+                            .getChatResponse(
+                              ChatBody(
+                                model: selectedModel.value,
+                                messages: [
+                                  Message(
+                                    role: KStrings.user,
+                                    content: sendMessageController.text,
+                                  ),
+                                ],
+                                temperature: 0.7,
+                              ),
+                            )
+                            .then(
+                              (value) => value
+                                  ? scrollController.animateTo(
+                                      scrollController.position.pixels ==
+                                              scrollController
+                                                  .position.maxScrollExtent
+                                          ? scrollController
+                                              .position.maxScrollExtent
+                                          : scrollController
+                                                  .position.maxScrollExtent +
+                                              300,
+                                      duration:
+                                          const Duration(milliseconds: 2000),
+                                      curve: Curves.fastOutSlowIn,
+                                    )
+                                  : null,
+                            );
 
-                      sendMessageController.clear();
+                        sendMessageController.clear();
+                      } else {
+                        //ref.watch(snackBarProvider(KStrings.apiKey));
+                        showToast(KStrings.warning);
+                      }
                     },
                     icon: const Icon(Icons.send),
                   ),
