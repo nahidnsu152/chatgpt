@@ -34,17 +34,20 @@ class HomeNotifier extends StateNotifier<HomeState> {
     );
   }
 
-  void getChatResponse(ChatBody body) async {
+  Future<bool> getChatResponse(ChatBody body) async {
     state = state.copyWith(loading: true);
     final result = await repo.chatResponse(body);
+    bool success = false;
 
     //Logger.d("result: $result");
     result.fold(
       (l) {
+        success = false;
         _ref.watch(snackBarProvider(l.error));
         return state = state.copyWith(failure: l, loading: false);
       },
       (r) {
+        success = true;
         return state =
             state.copyWith(loading: false, chatResponse: r, messages: [
           ...state.messages,
@@ -52,6 +55,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
         ]);
       },
     );
+    return success;
   }
 
   addToList(String role, String content) {

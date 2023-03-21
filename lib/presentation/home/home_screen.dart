@@ -1,9 +1,11 @@
+import 'package:chatgpt/application/global.dart';
 import 'package:chatgpt/domain/chat/chat_body.dart';
 import 'package:chatgpt/domain/chat/model/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../application/home/home_provider.dart';
 import '../../domain/chat_model/models/model_data.dart';
@@ -17,6 +19,15 @@ class HomeScreen extends HookConsumerWidget {
     final state = ref.watch(homeProvider);
     final selectedModel = useState('gpt-3.5-turbo-0301');
     final sendMessageController = useTextEditingController();
+    ScrollController scrollController = useScrollController();
+
+    ref.listen(homeProvider, (previous, next) {
+      if (previous!.loading == false && next.loading) {
+        showLoading();
+      } else {
+        closeLoading();
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -105,6 +116,7 @@ class HomeScreen extends HookConsumerWidget {
           Expanded(
             child: ListView.builder(
               //reverse: true,
+              controller: scrollController,
               itemCount: state.messages.length,
               itemBuilder: (context, index) {
                 return Column(
@@ -113,6 +125,7 @@ class HomeScreen extends HookConsumerWidget {
                     Padding(
                       padding: padding20,
                       child: Row(
+                        crossAxisAlignment: crossStart,
                         mainAxisAlignment: state.messages[index].role == 'user'
                             ? mainEnd
                             : mainStart,
@@ -140,6 +153,20 @@ class HomeScreen extends HookConsumerWidget {
                               ),
                             ),
                           ),
+                          Container(
+                            width: 40.w,
+                            height: 40.h,
+                            padding: padding6,
+                            decoration: BoxDecoration(
+                              color: context.color.primary,
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              color: context.color.onPrimary,
+                            ),
+                          ),
+                          gap10,
                         ],
                       ),
                     ),
@@ -173,6 +200,17 @@ class HomeScreen extends HookConsumerWidget {
           //     ],
           //   ),
           // ),
+          
+
+          //? Lottie
+          
+          
+          // Lottie.asset(
+          //   'assets/lottie/typing.json',
+          //   height: 100.h,
+          //   width: 100.w,
+          //   fit: BoxFit.fill,
+          // ),
 
           Material(
             child: Padding(
@@ -200,7 +238,10 @@ class HomeScreen extends HookConsumerWidget {
                             'user',
                             sendMessageController.text,
                           );
-                      ref.read(homeProvider.notifier).getChatResponse(
+
+                      ref
+                          .read(homeProvider.notifier)
+                          .getChatResponse(
                             ChatBody(
                               model: selectedModel.value,
                               messages: [
@@ -211,6 +252,15 @@ class HomeScreen extends HookConsumerWidget {
                               ],
                               temperature: 0.7,
                             ),
+                          )
+                          .then(
+                            (value) => value
+                                ? scrollController.animateTo(
+                                    scrollController.position.maxScrollExtent,
+                                    duration: const Duration(milliseconds: 600),
+                                    curve: Curves.easeIn,
+                                  )
+                                : null,
                           );
 
                       sendMessageController.clear();
