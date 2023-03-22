@@ -22,14 +22,18 @@ class HomeScreen extends HookConsumerWidget {
 
     ref.listen(homeProvider, (previous, next) {
       if (previous!.loading == false && next.loading) {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeIn,
-        );
         showLoading();
       } else {
         closeLoading();
+      }
+      if (previous.messages.length < next.messages.length) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOut,
+          );
+        });
       }
     });
 
@@ -154,22 +158,6 @@ class HomeScreen extends HookConsumerWidget {
                                     : CustomStyle
                                         .customStyleInstance.gptTextStyle,
                               ),
-                              // child: AnimatedTextKit(
-                              //     isRepeatingAnimation: false,
-                              //     repeatForever: false,
-                              //     displayFullTextOnTap: true,
-                              //     totalRepeatCount: 0,
-                              //     animatedTexts: [
-                              //       TyperAnimatedText(
-                              //         state.messages[index].content.trim(),
-                              //         textStyle:
-                              //             state.messages[index].role == 'user'
-                              //                 ? CustomStyle.customStyleInstance
-                              //                     .senderTextStyle
-                              //                 : CustomStyle.customStyleInstance
-                              //                     .gptTextStyle,
-                              //       ),
-                              //     ]),
                             ),
                           ),
                           gap10,
@@ -226,9 +214,7 @@ class HomeScreen extends HookConsumerWidget {
                             .then(
                               (value) => value
                                   ? scrollController.animateTo(
-                                      scrollController
-                                              .position.maxScrollExtent +
-                                          300,
+                                      scrollController.position.maxScrollExtent,
                                       duration:
                                           const Duration(milliseconds: 2000),
                                       curve: Curves.fastOutSlowIn,
