@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chatgpt/domain/chat/chat_body.dart';
 import 'package:chatgpt/domain/chat/model/message.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ class HomeScreen extends HookConsumerWidget {
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
         );
-
         showLoading();
       } else {
         closeLoading();
@@ -148,30 +146,30 @@ class HomeScreen extends HookConsumerWidget {
                             ),
                             child: ConstrainedBox(
                               constraints: BoxConstraints(maxWidth: 0.7.sw),
-                              // child: SelectableText(
-                              //   state.messages[index].content.trim(),
-                              //   style: state.messages[index].role == 'user'
-                              //       ? CustomStyle
-                              //           .customStyleInstance.senderTextStyle
-                              //       : CustomStyle
-                              //           .customStyleInstance.gptTextStyle,
-                              // ),
-                              child: AnimatedTextKit(
-                                  isRepeatingAnimation: false,
-                                  repeatForever: false,
-                                  displayFullTextOnTap: true,
-                                  totalRepeatCount: 0,
-                                  animatedTexts: [
-                                    TyperAnimatedText(
-                                      state.messages[index].content.trim(),
-                                      textStyle:
-                                          state.messages[index].role == 'user'
-                                              ? CustomStyle.customStyleInstance
-                                                  .senderTextStyle
-                                              : CustomStyle.customStyleInstance
-                                                  .gptTextStyle,
-                                    ),
-                                  ]),
+                              child: SelectableText(
+                                state.messages[index].content.trim(),
+                                style: state.messages[index].role == 'user'
+                                    ? CustomStyle
+                                        .customStyleInstance.senderTextStyle
+                                    : CustomStyle
+                                        .customStyleInstance.gptTextStyle,
+                              ),
+                              // child: AnimatedTextKit(
+                              //     isRepeatingAnimation: false,
+                              //     repeatForever: false,
+                              //     displayFullTextOnTap: true,
+                              //     totalRepeatCount: 0,
+                              //     animatedTexts: [
+                              //       TyperAnimatedText(
+                              //         state.messages[index].content.trim(),
+                              //         textStyle:
+                              //             state.messages[index].role == 'user'
+                              //                 ? CustomStyle.customStyleInstance
+                              //                     .senderTextStyle
+                              //                 : CustomStyle.customStyleInstance
+                              //                     .gptTextStyle,
+                              //       ),
+                              //     ]),
                             ),
                           ),
                           gap10,
@@ -228,14 +226,9 @@ class HomeScreen extends HookConsumerWidget {
                             .then(
                               (value) => value
                                   ? scrollController.animateTo(
-                                      scrollController.position.pixels ==
-                                              scrollController
-                                                  .position.maxScrollExtent
-                                          ? scrollController
-                                              .position.maxScrollExtent
-                                          : scrollController
-                                                  .position.maxScrollExtent +
-                                              300,
+                                      scrollController
+                                              .position.maxScrollExtent +
+                                          300,
                                       duration:
                                           const Duration(milliseconds: 2000),
                                       curve: Curves.fastOutSlowIn,
