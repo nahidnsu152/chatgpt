@@ -2,7 +2,7 @@ class KStrings {
   KStrings._();
 
   static const String apiKey =
-      "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";
+      "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";
 
   static const String appName = 'ChatGPT';
   static const String token = 'token';

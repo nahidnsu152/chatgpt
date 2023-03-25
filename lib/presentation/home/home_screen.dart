@@ -31,7 +31,7 @@ class HomeScreen extends HookConsumerWidget {
           scrollController.animateTo(
             scrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 200),
-            curve: Curves.easeOut,
+            curve: Curves.fastOutSlowIn,
           );
         });
       }
